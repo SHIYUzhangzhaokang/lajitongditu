@@ -136,6 +136,34 @@
 
    
 </script>
+<html>
+ <head>
+ <script type="text/javascript" >
+ 
+ function fnObjNotDefine(){
+     domethod();
+ }
+ 
+ function fnOnError(msg,url,lineno){
+    <!--
+    alert("window.onerror\n\n" +
+    "Error: " + msg + "\n" +
+    "URL:  " + url + "\n" +
+    "Line:  " + lineno);
+    return true; -->
+}
+window.onerror = fnOnError;
+MethodName.badcommand();
 
+function fnOnLoad(){
+    alert("on load!");
+}
+</script>
+</head>
+<body onload="fnOnLoad();">
+<input type="button" value="function not defined" onclick="badcommand();">
+<input type="button" value="object not defined" onclick="fnObjNotDefine();">
+</body>
+</html>
 
 
