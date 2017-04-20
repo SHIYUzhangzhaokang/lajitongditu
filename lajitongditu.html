@@ -3,29 +3,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-        body, html, #allmap {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            margin: 0;
-            font-family: "微软雅黑";
-        }
-    </style>
-
-    <!-- 实际应用时，请把qFf6d6jjokkyC4CVPxzqLVfZufEdu1dh改成您的百度开发都访问应用AK -->
-    <!-- 本AK仅用于测试，我们不保证该AK长期有效 -->
-    <!-- 可到：http://lbsyun.baidu.com/ 网站申请，应用类型为 浏览器 端 -->
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=qFf6d6jjokkyC4CVPxzqLVfZufEdu1dh"></script>
-    <script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script>
-    
-    <title>野火GPS地图</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+		body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		#allmap{height:760px;width:100%;}
+		#r-result{width:100%; font-size:14px;}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Ix865duWKswDACixGUmIVFYYaprz2TFf"></script>
+	<title>垃圾桶定位地图</title>
 </head>
+<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script>    
 <body>
     <div id="allmap"></div>
-
+     <div id="r-result">
+		经度: <input id="longitude" type="text" style="width:100px; margin-right:10px;" />
+		纬度: <input id="latitude" type="text" style="width:100px; margin-right:10px;" />
+		<input type="button" value="查询" onclick="theLocation()" />
+	</div>
 
 
 </body>
@@ -87,13 +82,13 @@
    // testAlert();
     
     // 用经纬度设置地图中心点
-    function theLocation(Longitude,Latitude) {
-        
-        var gpsPoint = new BMap.Point(Longitude, Latitude);
-
-        //gps坐标纠偏
-        BMap.Convertor.translate(gpsPoint, 0, translateCallback);     //真实经纬度转成百度坐标
-
+    function theLocation() {
+        if(document.getElementById("longitude").value != "" && document.getElementById("latitude").value != ""){
+			
+			var new_point = new BMap.Point(document.getElementById("longitude").value,document.getElementById("latitude").value);
+                        BMap.Convertor.translate(new_point, 0, translateCallback);
+			     
+	 }
 
             //map.clearOverlays();
             //var new_point = new BMap.Point(Longitude,Latitude );
@@ -124,12 +119,12 @@
 
 
     //坐标转换完之后的回调函数
-    translateCallback = function (point) {
+    translateCallback = function (new_point) {
 
         map.clearOverlays();
-        var marker = new BMap.Marker(point);
+        var marker = new BMap.Marker(new_point);
         map.addOverlay(marker);
-        map.setCenter(point);
+        map.setCenter(new_point);
       //  marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
     }
 
